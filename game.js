@@ -1,3 +1,5 @@
+alert("game.js loaded!");
+
 function startGame() {
     alert("Welcome to ThunderClan!");
 
@@ -8,8 +10,4 @@ function startGame() {
     } else {
         alert("A nameless cat? We'll find you a name later.");
     }
-}
-
-function comingSoon(feature) {
-    alert(feature + " is coming soon!");
 }
