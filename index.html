@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Warrior Cats: Legacy of the Clans</title>
 
 <style>
@@ -39,21 +40,20 @@ button{
     border:none;
     border-radius:12px;
     cursor:pointer;
-}
-
-#newGame{
     background:#4CAF50;
     color:white;
 }
 
+button:hover{
+    background:#5bc961;
+}
+
 #continue{
     background:#666666;
-    color:white;
 }
 
 #settings{
     background:#444444;
-    color:white;
 }
 </style>
 
@@ -67,23 +67,33 @@ button{
 
 <p>Legacy of the Clans</p>
 
-<button id="newGame" onclick="startGame()">New Game</button>
+<button onclick="startGame()">New Game</button><br>
 
-<button id="continue">Continue</button><br>
+<button onclick="comingSoon('Continue')">Continue</button><br>
 
-<button id="settings">Settings</button>
+<button onclick="comingSoon('Settings')">Settings</button>
 
 </div>
 
 <script>
+function startGame() {
 
-document.getElementById("newGame").onclick = function(){
+    alert("Welcome to ThunderClan!");
 
-    startGame();
+    let catName = prompt("What is your cat's name?");
+
+    if(catName && catName.trim() !== ""){
+        alert("Welcome, " + catName + "! Your Warrior journey begins.");
+    }else{
+        alert("A nameless cat? We'll find you a warrior name later.");
+    }
 
 }
 
+function comingSoon(feature){
+    alert(feature + " is coming soon!");
+}
 </script>
-<script src="game.js></script>
+
 </body>
 </html>
