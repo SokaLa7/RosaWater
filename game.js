@@ -20,13 +20,11 @@ function createCat(){
         return;
 
     }
+  	document.querySelector(".creator").style.display = "none";
 
-    alert(
-        "🐈 "+name+
-        "\nGender: "+gender+
-        "\nClan: "+clan+
-        "\nFur: "+fur+
-        "\n\nYour journey begins..."
-    );
+document.getElementById("camp").style.display = "block";
+
+document.getElementById("welcomeMessage").innerHTML =
+"🌲 Welcome to " + clan + ", <b>" + name + "</b>!";      
 
 }
