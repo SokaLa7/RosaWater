@@ -1,116 +1,258 @@
-import * as THREE from "https://unpkg.com/three@0.166.1/build/three.module.js";
+import * as THREE from "three";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87ceeb);
 
+// Camera
 const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
 );
 
-camera.position.set(0, 8, 12);
+camera.position.set(0,4,8);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+// Renderer
+const renderer = new THREE.WebGLRenderer({
+    antialias:true
+});
+
+renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const sun = new THREE.DirectionalLight(0xffffff, 3);
-sun.position.set(5, 15, 5);
+// Lights
+scene.add(new THREE.AmbientLight(0xffffff,1.2));
+
+const sun=new THREE.DirectionalLight(0xffffff,2);
+
+sun.position.set(20,30,10);
+
 scene.add(sun);
 
-scene.add(new THREE.AmbientLight(0xffffff, 1));
+// Ground
+const ground=new THREE.Mesh(
 
-const ground = new THREE.Mesh(
-    new THREE.PlaneGeometry(100, 100),
-    new THREE.MeshStandardMaterial({
-        color: 0x4CAF50
-    })
+new THREE.PlaneGeometry(250,250),
+
+new THREE.MeshStandardMaterial({
+color:0x5eb75e
+})
+
 );
 
-ground.rotation.x = -Math.PI / 2;
+ground.rotation.x=-Math.PI/2;
+
 scene.add(ground);
 
-// TREE
-function makeTree(x, z) {
+// Trees
+function makeTree(x,z){
 
-    const trunk = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.2, 0.3, 2),
-        new THREE.MeshStandardMaterial({
-            color: 0x7b4b22
-        })
-    );
+const trunk=new THREE.Mesh(
 
-    trunk.position.set(x, 1, z);
-    scene.add(trunk);
+new THREE.CylinderGeometry(.18,.22,2),
 
-    const leaves = new THREE.Mesh(
-        new THREE.SphereGeometry(1.2, 20, 20),
-        new THREE.MeshStandardMaterial({
-            color: 0x2f8f2f
-        })
-    );
+new THREE.MeshStandardMaterial({
+color:0x7a4a24
+})
 
-    leaves.position.set(x, 2.6, z);
-    scene.add(leaves);
-}
-
-for (let i = 0; i < 40; i++) {
-
-    makeTree(
-        (Math.random() - 0.5) * 80,
-        (Math.random() - 0.5) * 80
-    );
-
-}
-
-// TEMP CAT
-const cat = new THREE.Mesh(
-    new THREE.BoxGeometry(0.8, 0.5, 1.4),
-    new THREE.MeshStandardMaterial({
-        color: 0xff9933
-    })
 );
 
-cat.position.y = 0.25;
+trunk.position.set(x,1,z);
+
+scene.add(trunk);
+
+const leaves=new THREE.Mesh(
+
+new THREE.ConeGeometry(1.2,3,8),
+
+new THREE.MeshStandardMaterial({
+color:0x2e8b57
+})
+
+);
+
+leaves.position.set(x,3,z);
+
+scene.add(leaves);
+
+}
+
+for(let i=0;i<80;i++){
+
+makeTree(
+
+(Math.random()-0.5)*180,
+
+(Math.random()-0.5)*180
+
+);
+
+}
+
+// ===== CAT =====
+
+const cat=new THREE.Group();
+
+const fur=new THREE.MeshStandardMaterial({
+color:0xff9933
+});
+
+// Body
+const body=new THREE.Mesh(
+
+new THREE.BoxGeometry(1.3,.5,2.2),
+
+fur
+
+);
+
+body.position.y=.65;
+
+cat.add(body);
+
+// Head
+
+const head=new THREE.Mesh(
+
+new THREE.BoxGeometry(.75,.75,.75),
+
+fur
+
+);
+
+head.position.set(0,1,-1.35);
+
+cat.add(head);
+
+// Ears
+
+function ear(x){
+
+const e=new THREE.Mesh(
+
+new THREE.ConeGeometry(.12,.28,4),
+
+fur
+
+);
+
+e.position.set(x,1.45,-1.45);
+
+cat.add(e);
+
+}
+
+ear(-.22);
+
+ear(.22);
+
+// Tail
+
+const tail=new THREE.Mesh(
+
+new THREE.CylinderGeometry(.05,.07,1.3),
+
+fur
+
+);
+
+tail.rotation.x=Math.PI/3;
+
+tail.position.set(0,1,1.45);
+
+cat.add(tail);
+
+// Legs
+
+function leg(x,z){
+
+const l=new THREE.Mesh(
+
+new THREE.BoxGeometry(.22,.65,.22),
+
+fur
+
+);
+
+l.position.set(x,.3,z);
+
+cat.add(l);
+
+}
+
+leg(-.38,-.75);
+leg(.38,-.75);
+leg(-.38,.75);
+leg(.38,.75);
+
 scene.add(cat);
+// ===== CONTROLS =====
 
 const keys = {};
 
-window.addEventListener("keydown", (e) => {
-    keys[e.key.toLowerCase()] = true;
+window.addEventListener("keydown",(e)=>{
+    keys[e.key.toLowerCase()] = true;
 });
 
-window.addEventListener("keyup", (e) => {
-    keys[e.key.toLowerCase()] = false;
+window.addEventListener("keyup",(e)=>{
+    keys[e.key.toLowerCase()] = false;
 });
 
-function animate() {
+// Cat direction
+let angle = 0;
 
-    requestAnimationFrame(animate);
+// ===== GAME LOOP =====
 
-    if (keys["w"]) cat.position.z -= 0.1;
-    if (keys["s"]) cat.position.z += 0.1;
-    if (keys["a"]) cat.position.x -= 0.1;
-    if (keys["d"]) cat.position.x += 0.1;
+function animate(){
 
-    camera.position.x = cat.position.x;
-    camera.position.z = cat.position.z + 10;
+    requestAnimationFrame(animate);
 
-    camera.lookAt(cat.position);
+    const speed = 0.10;
 
-    renderer.render(scene, camera);
+    if(keys["a"]) angle += 0.04;
+    if(keys["d"]) angle -= 0.04;
+
+    cat.rotation.y = angle;
+
+    if(keys["w"]){
+        cat.position.x += Math.sin(angle) * speed;
+        cat.position.z += Math.cos(angle) * speed;
+    }
+
+    if(keys["s"]){
+        cat.position.x -= Math.sin(angle) * speed;
+        cat.position.z -= Math.cos(angle) * speed;
+    }
+
+    // Camera follows behind cat
+    camera.position.x = cat.position.x - Math.sin(angle) * 6;
+    camera.position.z = cat.position.z - Math.cos(angle) * 6;
+    camera.position.y = cat.position.y + 3;
+
+    camera.lookAt(
+        cat.position.x,
+        cat.position.y + 1,
+        cat.position.z
+    );
+
+    renderer.render(scene,camera);
 
 }
 
 animate();
 
-window.addEventListener("resize", () => {
+// Resize
 
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+window.addEventListener("resize",()=>{
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
 
 });
