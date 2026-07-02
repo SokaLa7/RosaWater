@@ -1,61 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Warrior Cats: Legacy of the Clans</title>
 
-<style>
-body{
-    margin:0;
-    background:#1f3320;
-    color:white;
-    font-family:Arial, sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
-
-.menu{
-    text-align:center;
-}
-
-h1{
-    font-size:48px;
-    margin-bottom:10px;
-}
-
-p{
-    color:#cccccc;
-    margin-bottom:40px;
-}
-
-button{
-    width:260px;
-    padding:18px;
-    margin:12px;
-    font-size:22px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    background:#4CAF50;
-    color:white;
-}
-
-button:hover{
-    background:#5bc961;
-}
-
-#continue{
-    background:#666666;
-}
-
-#settings{
-    background:#444444;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -67,33 +19,109 @@ button:hover{
 
 <p>Legacy of the Clans</p>
 
-<button onclick="startGame()">New Game</button><br>
+<button class="green" onclick="startGame()">
+New Game
+</button>
 
-<button onclick="comingSoon('Continue')">Continue</button><br>
+<br>
 
-<button onclick="comingSoon('Settings')">Settings</button>
+<button class="gray">
+Continue
+</button>
+
+<br>
+
+<button class="gray">
+Settings
+</button>
 
 </div>
 
-<script>
-function startGame() {
+<div class="creator">
 
-    alert("Welcome to ThunderClan!");
+<h1>Create Your Cat</h1>
 
-    let catName = prompt("What is your cat's name?");
+<label>Name</label>
 
-    if(catName && catName.trim() !== ""){
-        alert("Welcome, " + catName + "! Your Warrior journey begins.");
-    }else{
-        alert("A nameless cat? We'll find you a warrior name later.");
-    }
+<input
+type="text"
+id="catName"
+placeholder="Enter your cat's name">
 
-}
+<label>Gender</label>
 
-function comingSoon(feature){
-    alert(feature + " is coming soon!");
-}
-</script>
+<select id="gender">
+
+<option>Tom</option>
+
+<option>She-cat</option>
+
+<option>Other</option>
+
+</select>
+<label>Clan</label>
+
+<select id="clan">
+
+<option>ThunderClan</option>
+<option>RiverClan</option>
+<option>WindClan</option>
+<option>ShadowClan</option>
+<option>SkyClan</option>
+<option>Loner</option>
+<option>Rogue</option>
+<option>Kittypet</option>
+
+</select>
+
+<label>Fur Color</label>
+
+<select id="fur">
+
+<option>Black</option>
+<option>White</option>
+<option>Gray</option>
+<option>Dark Gray</option>
+<option>Brown</option>
+<option>Chocolate</option>
+<option>Ginger</option>
+<option>Cream</option>
+<option>Golden</option>
+
+</select>
+
+<label>Eye Color</label>
+
+<select id="eyeColor">
+
+<option>Green</option>
+<option>Blue</option>
+<option>Amber</option>
+<option>Yellow</option>
+<option>Gray</option>
+
+</select>
+
+<div class="preview">
+
+🐈
+
+</div>
+
+<p class="info">
+
+Live Cat Preview (coming soon!)
+
+</p>
+
+<button class="green" onclick="createCat()">
+
+Create Cat
+
+</button>
+
+</div>
+<script src="game.js"></script>
 
 </body>
 </html>
