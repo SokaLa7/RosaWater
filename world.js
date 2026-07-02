@@ -67,10 +67,10 @@ for (let i = 0; i < 40; i++) {
 
 // TEMP CAT
 const cat = new THREE.Mesh(
-    new THREE.BoxGeometry(0.8, 0.5, 1.4),
-    new THREE.MeshStandardMaterial({
-        color: 0xff9933
-    })
+    new THREE.BoxGeometry(0.8, 0.5, 1.4),
+    new THREE.MeshStandardMaterial({
+        color: 0xff9933
+    })
 );
 
 cat.position.y = 0.25;
