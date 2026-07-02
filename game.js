@@ -1,13 +1,32 @@
-alert("game.js loaded!");
+function startGame(){
 
-function startGame() {
-    alert("Welcome to ThunderClan!");
+    document.querySelector(".menu").style.display="none";
 
-    let catName = prompt("What is your cat's name?");
+    document.querySelector(".creator").style.display="block";
 
-    if (catName && catName.trim() !== "") {
-        alert("Welcome, " + catName + "! Your Warrior journey begins.");
-    } else {
-        alert("A nameless cat? We'll find you a name later.");
+}
+
+function createCat(){
+
+    const name=document.getElementById("catName").value;
+    const gender=document.getElementById("gender").value;
+    const clan=document.getElementById("clan").value;
+    const fur=document.getElementById("fur").value;
+
+    if(name===""){
+
+        alert("Please enter your cat's name.");
+
+        return;
+
     }
+
+    alert(
+        "🐈 "+name+
+        "\nGender: "+gender+
+        "\nClan: "+clan+
+        "\nFur: "+fur+
+        "\n\nYour journey begins..."
+    );
+
 }
