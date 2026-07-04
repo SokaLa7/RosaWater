@@ -186,3 +186,110 @@ tail.position.set(0,0.9,1.6);
 cat.add(tail);
 
 scene.add(cat);
+// =========================
+// JOYSTICK VARIABLES
+// =========================
+
+let joyX = 0;
+let joyY = 0;
+
+const base = document.getElementById("joystickBase");
+const stick = document.getElementById("joystickStick");
+
+if (base) {
+
+    base.addEventListener("pointerdown", startMove);
+    base.addEventListener("pointermove", moveStick);
+    window.addEventListener("pointerup", endMove);
+
+}
+
+function startMove(e) {
+
+    moveStick(e);
+
+}
+
+function moveStick(e) {
+
+    const rect = base.getBoundingClientRect();
+
+    let x = e.clientX - rect.left - 65;
+    let y = e.clientY - rect.top - 65;
+
+    const d = Math.sqrt(x * x + y * y);
+
+    if (d > 40) {
+
+        x = x / d * 40;
+        y = y / d * 40;
+
+    }
+
+    stick.style.left = (40 + x) + "px";
+    stick.style.top = (40 + y) + "px";
+
+    joyX = x / 40;
+    joyY = y / 40;
+
+}
+
+function endMove() {
+
+    joyX = 0;
+    joyY = 0;
+
+    stick.style.left = "40px";
+    stick.style.top = "40px";
+
+}
+// =========================
+// CAT MOVEMENT
+// =========================
+
+let angle = 0;
+
+function animate() {
+
+    requestAnimationFrame(animate);
+
+    const speed = 0.12;
+
+    if (joyX !== 0 || joyY !== 0) {
+
+        angle = Math.atan2(joyX, joyY);
+
+        cat.rotation.y = angle;
+
+        cat.position.x += Math.sin(angle) * (-joyY) * speed;
+        cat.position.z += Math.cos(angle) * (-joyY) * speed;
+
+    }
+
+    camera.position.x = cat.position.x;
+    camera.position.y = 4;
+    camera.position.z = cat.position.z + 8;
+
+    camera.lookAt(
+        cat.position.x,
+        cat.position.y + 1,
+        cat.position.z
+    );
+
+    renderer.render(scene, camera);
+
+}
+
+animate();
+
+window.addEventListener("resize", () => {
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
+
+});
