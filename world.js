@@ -265,17 +265,20 @@ function animate() {
         cat.position.z += Math.cos(angle) * (-joyY) * speed;
 
     }
+    
+// Camera Follow
+const cameraDistance = 6;
+const cameraHeight = 3.5;
 
-    camera.position.x = cat.position.x;
-    camera.position.y = 4;
-    camera.position.z = cat.position.z + 8;
+camera.position.x = cat.position.x - Math.sin(angle) * cameraDistance;
+camera.position.y = cat.position.y + cameraHeight;
+camera.position.z = cat.position.z - Math.cos(angle) * cameraDistance;
 
-    camera.lookAt(
-        cat.position.x,
-        cat.position.y + 1,
-        cat.position.z
-    );
-
+camera.lookAt(
+    cat.position.x,
+    cat.position.y + 1,
+    cat.position.z
+);
     renderer.render(scene, camera);
 
 }
