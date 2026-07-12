@@ -12,7 +12,7 @@ window.innerWidth/window.innerHeight,
 1000
 );
 
-camera.position.set(0,4,8);
+camera.position.set(0,2,5);
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
