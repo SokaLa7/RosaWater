@@ -107,92 +107,49 @@ for(let i=0;i<70;i++){
 
         (Math.random()-0.5)*220,
 
-        (Math.random()-0.5)*220
-
-    );
-
-}
-// ===== CAT =====
+        (Math.random()-0.5)*
+// =====================
+// CAT
+// =====================
 
 const cat = new THREE.Group();
 
 const fur = new THREE.MeshStandardMaterial({
-    color:0xff9933
+    color: 0xff9933
 });
+    // Chest
 
-// Body
-const body = new THREE.Mesh(
-    new THREE.CapsuleGeometry(
-    0.45,
-    0.9,
-    8,
-    16
-)
+const chest = new THREE.Mesh(
+    new THREE.SphereGeometry(0.42, 24, 24),
     fur
 );
 
-body.position.y = 0.6;
-cat.add(body);
+chest.scale.set(1.0, 0.9, 1.25);
+chest.position.set(0, 0.95, 0);
 
-// Head
-const head = new THREE.Mesh(
-   new THREE.SphereGeometry(
-    0.35,
-    20,
-    20
-)
+cat.add(chest);
+    // Ribcage
+
+const ribs = new THREE.Mesh(
+    new THREE.SphereGeometry(0.40, 24, 24),
     fur
 );
 
-head.position.set(0,1,-1.55);
-cat.add(head);
+ribs.scale.set(1.0, 0.85, 1.5);
+ribs.position.set(0, 0.95, 0.45);
 
-// Ears
-function makeEar(x){
+cat.add(ribs);
+    // Hips
 
-    const ear = new THREE.Mesh(
-        new THREE.ConeGeometry(0.12,0.3,4),
-        fur
-    );
-
-    ear.position.set(x,1.45,-1.72);
-
-    cat.add(ear);
-
-}
-
-makeEar(-0.22);
-makeEar(0.22);
-
-// Legs
-function makeLeg(x,z){
-
-    const leg = new THREE.Mesh(
-        new THREE.BoxGeometry(0.2,0.6,0.2),
-        fur
-    );
-
-    leg.position.set(x,0.3,z);
-
-    cat.add(leg);
-
-}
-
-makeLeg(-0.35,-0.8);
-makeLeg(0.35,-0.8);
-makeLeg(-0.35,0.8);
-makeLeg(0.35,0.8);
-
-// Tail
-const tail = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.05,0.08,1.3),
+const hips = new THREE.Mesh(
+    new THREE.SphereGeometry(0.42, 24, 24),
     fur
 );
 
-tail.rotation.x = -Math.PI/4;
-tail.position.set(0,0.9,1.6);
+hips.scale.set(1.05, 0.95, 1.1);
+hips.position.set(0, 0.92, 1.0);
 
-cat.add(tail);
+cat.add(hips);
 
 scene.add(cat);
 // =========================
