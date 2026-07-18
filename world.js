@@ -122,7 +122,12 @@ const fur = new THREE.MeshStandardMaterial({
 
 // Body
 const body = new THREE.Mesh(
-    new THREE.BoxGeometry(1.0,0.55,2.4),
+    new THREE.CapsuleGeometry(
+    0.45,
+    0.9,
+    8,
+    16
+)
     fur
 );
 
@@ -131,7 +136,11 @@ cat.add(body);
 
 // Head
 const head = new THREE.Mesh(
-    new THREE.BoxGeometry(0.95,0.8,0.95),
+   new THREE.SphereGeometry(
+    0.35,
+    20,
+    20
+)
     fur
 );
 
